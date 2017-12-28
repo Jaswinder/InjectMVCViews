@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .contentPlace
+    {
+        width:100%;
+        height:500px;
+    }
+</style>
+<script>
+    function GetAjaxData(url, method, datatype, data) {
+        var response;
+        $.ajax({
+            async: false,
+            type: method,
+            url: url,
+            data: data,
+            dataType: datatype,
+            contentType: "application/json",
+            success: function (res) {
+                response = res;
+            },
+            error: function (err) {
+                response = err;
+            }
+
+        });
+        return response;
+    }
+    $(document).ready(function () {
+        $(".addnew").on('click', function () {
+            var url = $(this).attr("data-url");
+            LoadDialog(url);
+        });
+    });
+    function LoadDialog(loadurl) {
+        this.counter = undefined;
+        var htmlcontent = GetAjaxData(loadurl, "GET", "html");
+        $("#contentPlace").html(htmlcontent);
+       
+    }
+
+</script>
+<button data-url="@Url.Action("FirstChild","Injection")" class="btn btn-primary addnew"><i class=" icon-plus-2 on-left primary"></i>First Child</button>
+<button data-url="@Url.Action("SecondChild","Injection")" class="btn btn-primary addnew"><i class=" icon-plus-2 on-left primary"></i>Second Child</button>
+<button data-url="@Url.Action("ThirdChild","Injection")" class="btn btn-primary addnew"><i class=" icon-plus-2 on-left primary"></i>Third Child</button>
+<h2>Index</h2>
+<div id="contentPlace" class="contentPlace">
+
+</div>
+
+
+
